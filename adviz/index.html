@@ -1,165 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aufgabe 2- Duc Hung Tran, Joerg Garbele</title>
+    <title>Adviz- Duc Hung Tran, Joerg Garbele</title>
     <link rel="stylesheet" href="./css/stylesheet.css">
+    <script src="./js/showscreen.js"></script>
+    <script src="./js/updatedelete.js"></script>
+    <script src="./js/addmarker.js"></script>
+    <script defer src="./js/addcontact.js"></script>
+    <script defer src="./js/userlogin.js"></script>
+    <script defer src="./js/map.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 </head>
+
 <body>
     <!-- Navigation-->
     <nav id="navi">
-
-        <a href="#Login">Login</a>
-        <a href="#Main">Main</a>
-        <a href="#AddContact">Add Contact</a>
-        <a href="#Update/Delete">Update/Delete</a>
-
+        <!--
+        <a href="#Login"onclick="loginshow()">Login</a>
+        <a href="#Main" onclick="mainshow()">Main</a>
+        <a href="#AddContact" onclick="addcontactshow()">Add Contact</a>
+        <a href="#Update/Delete" onclick="updateshow()">Update/Delete</a>
+            -->
+        <h1 id="welcome">Welcome</h1>
+        <button onclick="logout()">Logout</button> 
+        
     </nav>
     <div class="contend">
-        <div class="screen">
-        <!-- Login-Screen -->
+        
+        <div class="showscreen">
+            <!-- Login-Screen -->
             <div id="login" class="login">
-        <form action=”/survey" method="POST">
-                <label for="username">Username: </label>
-                <input type="text" id="userName" name="username" value="Your Name" required/> 
-                <br/>
-                <label for="password">Password: </label>
-                <input type="password" />
-                <br>
-                <button id="" type="submit">Submit</button> 
-        </form>
+                <form method="GET">
+                    <label for="username">Username: </label>
+                    <input type="text" id="userName" name="username" required />
+                    <br />
+                    <label for="password">Password: </label>
+                    <input type="password" id="password" />
+                    <br>
+                    
+                </form>
+                <button onclick="getInfo()"> Submit </button>
             </div>
-
-        </div>
-    </div>
-
-    <div class="contend">
-        <div class="screen">
-        <!-- Main-Screen -->
+            <!--Main-Screen -->
+            
             <div id="mainScreen" class="mainscreen">
-                <div class="karte">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2427.6327701135956!2d13.411117315953295!3d52.52198464383436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e1edb11286f%3A0x30fc01c366e4166e!2sAlexanderplatz!5e0!3m2!1sen!2sde!4v1620051332090!5m2!1sen!2sde" 
-                    width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="karte" id="karte">
+                    <!--<iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2427.6327701135956!2d13.411117315953295!3d52.52198464383436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e1edb11286f%3A0x30fc01c366e4166e!2sAlexanderplatz!5e0!3m2!1sen!2sde!4v1620051332090!5m2!1sen!2sde"
+                        width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>-->
+                    <div id="mapDiv" style="width: 100%; height: 500px"></div>  
+                    <script>
+                        
+                        var lat = 52.5220;
+                        var lon = 13.4133;
+                    
+                        // initialize map
+                        map = L.map('karte').setView([lat, lon], 16);
+                    
+                        // set map tiles source
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                          maxZoom: 18,
+                        }).addTo(map);
+                        
+                          
+                        //marker1= new L.marker([52.521600, 13.414600]).addTo(map).bindPopup("Uchiha Sasuke");
+                        //marker2= new L.marker([51.325350, 6.561680]).addTo(map).bindPopup("Eren Yeager").openPopup();
+                        
+                        // add marker to the map
+                       // marker = L.marker([lat, lon]).addTo(map);
+                        //marker = L.marker([lat, lon]).addTo(map);
+                    
+                        //marker2 = L.marker([lat+1, lon]).addTo(map);
+                        
+                        // add popup to the marker
+                        //marker.bindPopup("Alexanderplatz").openPopup();
+                      
+                    </script>  
+
                 </div>
-                <div class="hartcodiert">
+                <div class="hartcodiert" id="hartcodiert">
                     <div class="buttons">
-                        <button name="showmycontact">Show my contacts</button>
-                        <button name="showallcontact">Show all contacts</button>
-                        <button name="addnewcontact">Add new contacts</button>
+                        <button name="showmycontact" onclick="showhartcordiert2()">Show my contacts</button>
+                        <button name="showallcontact" onclick="showhartcordiertAll()">Show all contacts</button>
+                        <button name="addnewcontact" onclick="addcontactshow()">Add new contacts</button>
                     </div>
-                    <div class="rechtecke">First</div>
+                    <div id="hartcodiertadmin" style="display: none;"></div>
+                    <div id="hartcodiertnormalo" style="display: none;">
+                        
+                        <div id="hartcodiertPublicAdmin" style="display: none;"></div>    
+                    </div>
+                    
+                    
+                    
+                    <!--<div class="rechtecke">First</div>
                     <br>
                     <div class="rechtecke">Second</div>
                     <br>
                     <div class="rechtecke">Third</div>
                     <br>
-
-                    
+                    -->
                 </div>
-                
-            </div>
+            </div>    
+            
+            <!-- Add-Contact-Screen -->
+            <div id="addcontact" class="addcontact">
+                    <form method="GET">
+<!-- format by table -->
+                        <table>
+                             <tr>
+                                 <td><label for="firstname">First name: </label></td>
+                                 <td> <input type="text" id="firstName" name="firstname" required /></td>
+                             </tr>  
 
-        </div>
-    </div>
+                                    
+                             <tr>
+                                <td>  <label for="lastname">Last name: </label>  </td>
+                                <td> <input type="text" id="lastName" name="lastname" placeholder="your last mame" required /></td>
 
-    <div class="contend">
-        <div class="screen">
-        <!-- Add-Contact-Screen -->
-        <div id="addcontact" class="addcontact">
-            <form action=”/survey" method="POST">
-                    <label for="firstname">First name: </label>
-                    <input type="text" id="firstName" name="firstname" value="Your First Name" required/> 
-                    <br/>
-                    <label for="lastname">Last name: </label>
-                    <input type="text" id="lastName" name="lastname" value="Your Last Name" required/> 
-                    <br/>
-                    <label for="adresse">Street and number: </label>
-                    <input type="text" id="adresse" name="adresse" value="Your Adresse" required/> 
-                    <br/>
-                    <label for="zip">Zip: </label>
-                    <input type="text" id="zip" name="zip" required/> 
-                    <br/>
-                    <label for="city">City: </label>
-                    <input type="text" id="city" name="city" required/> 
-                    <br/>
-                    <label for="state">State: </label>
-                    <input type="text" id="state" name="state" /> 
-                    <br/>
-                    <label for="country">Country: </label>
-                    <input type="text" id="country" name="country"/> 
-                    <br/>
-                    <input type="checkbox" id="nl" name="private" checked/> 
-                    <label for="private"> Private</label>
-                    <input type="checkbox" id="nl" name="public" />
-                    <label for="private"> Public</label><br>
-                    <label for="owner">Owner of new contact:</label>
-                    <select name="owner" id="owner">
-                        <option value="self" selected>self</option>
-                        <option value="normalo">normalo</option>
+                             </tr>
+
+                             <tr>
+                                <td><label for="adresse">Street and number: </label></td>
+                                <td><input type="text" id="adresse" name="adresse" placeholder="your adresse" required /></td>
+                            </tr>
+                            
+                            
+                            <tr>
+                                    <td><label for="zip">Zip: </label></td>
+                                    <td><input type="text" id="zip" name="zip" required /></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="city">City: </label></td>
+                                <td><input type="text" id="city" name="city" required /></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="state">State: </label></td>
+                                <td><input type="text" id="state" name="state" /></td>
+                            </tr>
+                            
+                            <tr>
+                                <td><label for="country">Country: </label></td>
+                                <td><input type="text" id="country" name="country" /></td>
+                            </tr>
+
+                        </table>
+
                         
-                    </select>
-                    <br>
-                    <button id="" type="add">Add</button>
-                    <button id="" type="save">Save</button>
+                        <input type="checkbox" id="isprivate" name="private" checked /> 
+                        <label for="private"> Private</label>
+                        <input type="checkbox" id="ispublic" name="public" />
+                        <label for="private"> Public</label><br>
+                        <label for="owner">Owner of new contact:</label>
+                        <select name="owner" id="owner">
+                            <option value="self" selected>self</option>
+                            <option value="normalo">normalo</option>
+
+                        </select>  
+                    </form>
+                    <button id="savebtn" type="save" onclick="saveContact()">Save</button>
                     <br> 
-            </form>
-                </div>
 
-        </div>
-    </div>
+            </div> 
 
-
-    <div class="contend">
-        <div class="screen">
-        <!-- Update/Delete-Screen -->
+            <!-- Update/Delete-Screen -->
             <div id="updatescreen" class="updatescreen">
                 <form action=”/survey" method="POST">
-                    <label for="firstname">First name: </label>
-                    <input type="text" id="firstName" name="firstname" value="Bob" required/> 
-                    <br/>
-                    <label for="lastname">Last name: </label>
-                    <input type="text" id="lastName" name="lastname" value="Brown" required/> 
-                    <br/>
-                    <label for="adresse">Street and number: </label>
-                    <input type="text" id="adresse" name="adresse" value="Berliner Strasse 22" required/> 
-                    <br/>
-                    <label for="zip">Zip: </label>
-                    <input type="text" id="zip" name="zip" value="10715" required/> 
-                    <br/>
-                    <label for="city">City: </label>
-                    <input type="text" id="city" name="city" value="Berlin" required/> 
-                    <br/>
-                    <label for="state">State: </label>
-                    <input type="text" id="state" name="state" value="Berlin"/> 
-                    <br/>
-                    <label for="country">Country: </label>
-                    <input type="text" id="country" name="country" value="Germany"/> 
-                    <br/>
-                    <label for="private"> Private</label>
-                    <input type="checkbox"  name="private" checked/> 
-                        <label for="public"> Public</label>
-                        <input type="checkbox"  name="public" />     
-                        
+                    <table>
+                        <tr>
+                            <td><label for="firstname1">First name: </label></td>
+                            <td><input type="text" id="firstName1" name="firstname1" value="Bob" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="lastname1">Last name: </label></td>
+                            <td><input type="text" id="lastName1" name="lastname1" value="Brown" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="adresse1">Street and number: </label></td>
+                            <td><input type="text" id="adresse1" name="adresse1" value="Berliner Strasse 22" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="zip1">Zip: </label></td>
+                            <td><input type="text" id="zip1" name="zip1" value="10715" required /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="city1">City: </label></td>
+                            <td><input type="text" id="city1" name="city1" value="Berlin" required /></td>
+                        </tr>
+                        <tr>
+                        <td><label for="state1">State: </label></td>
+                        <td><input type="text" id="state1" name="state1" value="Berlin" /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="country1">Country: </label></td>
+                            <td><input type="text" id="country1" name="country1" value="Germany" /></td>
+                        </tr>
+                </table>
+                    <label for="private1"> Private</label>
+                    <input type="checkbox" id="isprivate1" name="private" checked /> 
+                    <label for="public1"> Public</label>
+                    <input type="checkbox" name="public" /> 
+
                     <br>
-                    <label for="owner">Owner of new contact:</label>
-                    <select name="owner" id="owner">
+                    <label for="owner1">Owner of new contact:</label>
+                    <select name="owner" id="owner1">
                         <option value="self">self</option>
-                        <option value="normalo"selected>normalo</option>
-                        
+                        <option value="normalo">normalo</option>
+
                     </select>
                     <br>
-                    <button id="" type="update">Update</button>
-                    <button id="" type="delete">Delete</button>
-                    <br> 
-            </form>   
-                
-            </div>
+                    
+                </form>
+                <button id="update" type="update" onclick="updateFunction()">Update</button>
+                <button id="delete" type="delete" onclick="deleteFunction()">Delete</button>
+                <br> 
 
+            </div> 
+
+
+
+
+            </div>
+        
+        
+        
         </div>
-    </div>
-    
-    
+
+
 </body>
+
 </html>
