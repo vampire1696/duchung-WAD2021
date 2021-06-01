@@ -50,6 +50,7 @@ function saveContact() {
         normalo.className = "rechtecke";
         normalo.innerHTML = normaloContactNew.firstname + " " + normaloContactNew.lastname;
         hartcodiert.appendChild(normalo);
+        onClickOpenUpdate();
         document.getElementById("addcontact").style.display = "none";
     }
 
