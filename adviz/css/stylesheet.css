@@ -90,10 +90,7 @@ a:hover {
     height: 100%;
     flex: 50%;  
 }
-.karte iframe {
-    width: 100%;
-    height: 100%;
-}
+
 .hartcodiert {
     float:left;
     background-color: grey;
