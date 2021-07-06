@@ -121,7 +121,25 @@ function Contact(firstname,lastname,adresse,zip,city,state,country,isPrivate,own
 }
 const username = document.getElementById('userName')
 const password = document.getElementById('password') 
-
+var MongoClient = require('mongodb').MongoClient; 
+var url = "mongodb://localhost:27017/";
+function addMongo(){
+    
+    MongoClient.connect(url, {useUnifiedTopology: true}, 
+        function (err, client) { 
+            if(err) { //better error handling needed 
+                 throw err;
+            }             
+            let db = client.db("loginDB");
+            var userobj = {userId: "admina", password: "1234"};
+            db.collection("users").insertOne(userobj, function(err, res) {
+                if (err) throw err;
+                console.log("1 document inserted");
+                console.log(res);
+                client.close();
+              });
+        }); 
+}
 function addLocateMarkeradmin(){
     marker3= new L.marker([52.521610260009766, 13.412644386291504]).addTo(map).bindPopup("Mikasa Ackerman").openPopup();
     //addMarker("Mikasa Ackerman","Alexanderplatz 30","10178")
@@ -150,9 +168,11 @@ function getInfo(){
                 addLocateMarkernormalo();
             }
 			return
-		}
-
+		} else {
+            alert("wrong account");
+        }
 	}
+    addMongo();
     
 }
 
