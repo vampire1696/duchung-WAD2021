@@ -19,6 +19,10 @@ const ContactSchema = new Schema({
 		type: String,
 		required: true
 	},
+	city: {
+		type: String,
+		required: true
+	},
     state: {
 		type: String,
 		required: true
@@ -31,13 +35,13 @@ const ContactSchema = new Schema({
 		type: Boolean,
 		required: true
 	},
-    lat: {
+	lat: {
 		type: String,
-		required: true
+		required: false
 	},
-    long: {
+	long: {
 		type: String,
-		required: true
+		required: false
 	},
     owerID: {
 		type: String,

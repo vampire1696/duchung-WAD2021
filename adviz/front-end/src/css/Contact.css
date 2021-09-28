@@ -1,0 +1,11 @@
+.rechtecke{
+    float: left;
+    margin-right: 7%;
+    display: inline-block;
+    width: 26%;
+    min-height: 30px;
+    margin-left: 5%;
+    margin-bottom: 21px;
+    background-color: lightsalmon;
+    padding: 12px;
+}

@@ -13,20 +13,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 app.use('/', authRouter)
 
 const connectDB = async () => {
 	try {
 		await mongoose.connect(
-			`mongodb+srv://admina:1234@cluster0.lpjjv.mongodb.net/WAD?retryWrites=true&w=majority`,
-			{
-				useCreateIndex: true,
-				useNewUrlParser: true,
-				useUnifiedTopology: true,
-				useFindAndModify: false
-			}
+			`mongodb+srv://admina:1234@cluster0.lpjjv.mongodb.net/WAD?retryWrites=true&w=majority`
 		)
 
 		console.log('MongoDB connected')

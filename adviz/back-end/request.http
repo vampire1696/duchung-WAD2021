@@ -1,5 +1,5 @@
 /// new user Register
-POST  http://localhost:3000/register
+POST  http://localhost:5000/register
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 ###
 /// Check Login 
-POST http://localhost:3000/login
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
@@ -18,35 +18,35 @@ Content-Type: application/json
 }
 ###
 /// Post Contact
-POST http://localhost:3000/contact
+POST http://localhost:5000/contact
 Content-Type: application/json
 
 {
-    "firstName":"Bo2b",
+    "firstName":"Bb4554",
     "lastName":"Brown",
     "streetNumber":"Berliner Straße 22",
     "zip":"10715",
     "city":"Berlin",
     "state":"Berlin",
     "country":"Germany",
-    "isPublic":false,
-    "lat":"52.520008",
-    "long":"13.404954",
-    "owerID":"normalo"
+    "isPublic":true,
+    "lat":"",
+    "long":"",
+    "owerID":"admina"
 }
 ###
 //Show All Contacts
-GET http://localhost:3000/contact
+GET http://localhost:5000/contact
 Content-Type: application/json
 
 ###
 ///Show contact with id
-GET http://localhost:3000/contact/60e3cfdfcf6aa71b3c05aae2
+GET http://localhost:5000/contact/60e3cfdfcf6aa71b3c05aae2
 Content-Type: application/json
 
 ###
 ///Change Contact with id
-PUT http://localhost:3000/contact/60e3cfdfcf6aa71b3c05aae2
+PUT http://localhost:5000/contact/60e3cfdfcf6aa71b3c05aae2
 Content-Type: application/json
 
 {
@@ -65,7 +65,7 @@ Content-Type: application/json
 
 ###
 ///Delete Contact with id
-DELETE  http://localhost:3000/contact/60e3eaa7b41b0304f4e69979
+DELETE  http://localhost:5000/contact/60e3eaa7b41b0304f4e69979
 Content-Type: application/json
 
 

@@ -108,7 +108,7 @@ router.post('/contact', async (req, res) => {
 	if (!firstName || !lastName)
 		return res
 			.status(400)
-			.json({ success: false, message: 'Missing Information' })
+			.json({ success: false, message: 'Missing Infor4mation' })
 
 	try {
 		const newContact = new Contact({ firstName,lastName,streetNumber,zip,city,state,country,isPublic,lat,long,owerID})
@@ -117,7 +117,8 @@ router.post('/contact', async (req, res) => {
 		res.json({
 			success: true,
 			message: 'Create Contact successfully',
-			newContactID: newContact._id
+			newContactID: newContact._id,
+			contact: newContact
 		})
 	} catch (error) {
 		console.log(error)
